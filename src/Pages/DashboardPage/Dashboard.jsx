@@ -4,23 +4,15 @@ import { getFirestore, collection, getDocs, query, where } from "firebase/firest
 import { initializeApp } from "firebase/app";
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import firebaseConfig from '../../FirebaseData';
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 function Dashboard() {
     const { state } = useLocation();
     const uid = state?.userId;
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyA2UWh17YyktnC7i_DWbvkWxgHt6HQzF98",
-        authDomain: "devslog-97116.firebaseapp.com",
-        projectId: "devslog-97116",
-        storageBucket: "devslog-97116.appspot.com",
-        messagingSenderId: "220123085362",
-        appId: "1:220123085362:web:d55f7f3d0c776b58be9a2b",
-        measurementId: "G-FNNMDMCPY0"
-    };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
 
     let curDate = new Date().toLocaleDateString("en-US");
     const [weekHours, setWeekHours] = useState([]);
