@@ -34,9 +34,10 @@ function Registration({ setIsAuthenticated }) {
     const [username, setUsername] = useState('');
     const [isNewUser, setIsNewUser] = useState(false);
 
-    const handleRegistration = () => {
+    const handleRegistration = (userid) => {
         setIsAuthenticated(true);
-        navigate('/dashboard');
+        console.log("uid is = " + userid);
+        navigate('/dashboard', { state: { userId: userid } });
     };
 
 
@@ -49,7 +50,7 @@ function Registration({ setIsAuthenticated }) {
                 const userId = result.user.uid;
                 setUid(userId)
                 checkIfUserExists(userId);
-                handleRegistration();
+                handleRegistration(userId);
             }).catch((error) => {
                 console.log(error);
             })
@@ -64,7 +65,7 @@ function Registration({ setIsAuthenticated }) {
                 const userId = result.user.uid;
                 setUid(userId)
                 checkIfUserExists(userId);
-                handleRegistration();
+                handleRegistration(userId);
             }).catch((error) => {
                 console.log(error);
             })
