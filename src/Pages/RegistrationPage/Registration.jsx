@@ -1,8 +1,8 @@
 import './style.css';
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
-import { getFirestore, collection, getDocs, addDoc, setDoc, getDoc } from "firebase/firestore";
-import { doc, updateDoc, query, orderBy, limit, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs, setDoc } from "firebase/firestore";
+import { doc, query, limit, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';

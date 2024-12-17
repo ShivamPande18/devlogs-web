@@ -49,8 +49,8 @@
 }
 
 .nav-signup-btn:hover {
-    border: dashed var(--color-text-primary);
-    background-color: var(--color-primary);
+    border: dashed var(--color-primary);
+    background-color: transparent;
 }
 
 .hero {
@@ -93,8 +93,8 @@
 }
 
 .hero-btn:hover {
-    border: dashed var(--color-text-primary);
-    background-color: var(--color-primary);
+    border: dashed var(--color-primary);
+    background-color: transparent;
 }
 
 .hero-image {
@@ -172,8 +172,8 @@ p {
 }
 
 .signup-btn:hover {
-    border: dashed var(--color-text-primary);
-    background-color: var(--color-primary);
+    border: dashed var(--color-primary);
+    background-color: transparent;
 }
 
 .get-in-touch {
@@ -212,6 +212,6 @@ p {
 }
 
 .contact-btn:hover {
-    border: dashed var(--color-text-primary);
-    background-color: var(--color-primary);
+    border: dashed var(--color-primary);
+    background-color: transparent;
 }
