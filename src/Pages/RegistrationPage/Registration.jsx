@@ -35,8 +35,8 @@ function Registration({ setIsAuthenticated }) {
     const handleGoogleLogin = () => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const accessToken = credential.accessToken;
+                // const credential = GoogleAuthProvider.credentialFromResult(result);
+                // const accessToken = credential.accessToken;
                 // setToken(accessToken);
                 const userId = result.user.uid;
                 setUid(userId)
@@ -50,8 +50,8 @@ function Registration({ setIsAuthenticated }) {
     const handleGithubLogin = () => {
         signInWithPopup(auth, githubProvider)
             .then((result) => {
-                const credential = GithubAuthProvider.credentialFromResult(result);
-                const accessToken = credential.accessToken;
+                // const credential = GithubAuthProvider.credentialFromResult(result);
+                // const accessToken = credential.accessToken;
                 // setToken(accessToken);
                 const userId = result.user.uid;
                 setUid(userId)
@@ -95,6 +95,7 @@ function Registration({ setIsAuthenticated }) {
                     streak: 0,
                     lastSeen: new Date("10/14/2024").toLocaleDateString("en-us"),
                     logs: [],
+                    langs: []
                 });
                 setIsLoggedIn(true);
                 setIsNewUser(false);

@@ -5,10 +5,18 @@ import Registration from './Pages/RegistrationPage/Registration.jsx'
 import Dashboard from './Pages/DashboardPage/Dashboard.jsx'
 import { ProtectedRoute } from './Pages/ProtectedRoute.jsx'
 
+
 function App() {
   // This state should actually be managed with a proper state management solution
   // like Redux or Context API in a real application
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('isAuthenticated') === 'true'
+  });
+
+  const handleSetIsAuthenticated = (value) => {
+    localStorage.setItem('isAuthenticated', value);
+    setIsAuthenticated(value);
+  };
 
   return (
     <Router>
@@ -19,7 +27,7 @@ function App() {
           path="/register"
           element={
             <Registration
-              setIsAuthenticated={setIsAuthenticated}
+              setIsAuthenticated={handleSetIsAuthenticated}
             />
           }
         />

@@ -119,6 +119,7 @@ function Dashboard() {
 
         };
         fetchLogs();
+        // eslint-disable-next-line
     }, [uid]);
 
     return (
@@ -148,8 +149,8 @@ function Dashboard() {
                         <p>Productivity</p>
                     </div>
                     <div className="stat-item">
-                        <h3>{langs[0]?.split(' ')[1] || '0%'}</h3>
-                        <p>{langs[0]?.split(' ')[0] || 'None'}</p>
+                        <h3>{langs[0]?.split(' ')[1] + "%" || '0%'}</h3>
+                        <p>{langs[0]?.split(' ')[0] + " Used" || 'No Language'}</p>
                     </div>
                     <div className="stat-item">
                         <h3>{langs.filter(lang => parseFloat(lang.split(' ')[1]) > 0).length}</h3>
