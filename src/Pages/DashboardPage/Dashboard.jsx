@@ -21,6 +21,7 @@ function Dashboard() {
     const [hours, setHours] = useState([]);
     const [streak, setStreak] = useState(0);
     const [uname, setUname] = useState("");
+    const [langs, setLangs] = useState([]);
 
     useEffect(() => {
         if (!uid) {
@@ -33,10 +34,12 @@ function Dashboard() {
             const q = query(logsRef, where("userId", "==", uid));
             const querySnapshot = await getDocs(q);
             const logsData = [];
+            const langsData = [];
             querySnapshot.forEach((doc) => {
                 logsData.push(doc.data().logs);
                 setUname(doc.data().username);
                 setStreak(doc.data().streak);
+                langsData.push(doc.data().langs);
             });
 
             // Split log data into separate date and hour arrays
@@ -74,6 +77,20 @@ function Dashboard() {
             }
 
             setWeekHours(weeklyHours.reverse());
+            // Calculate total hours across all languages
+            const totalHours = langsData[0].reduce((total, langStr) => {
+                const hours = parseFloat(langStr.split('-')[1]);
+                return total + hours;
+            }, 0);
+
+            // Calculate percentage for each language
+            const langsPer = langsData[0].map(langStr => {
+                const [lang, hoursStr] = langStr.split('-');
+                const hours = parseFloat(hoursStr);
+                const percentage = ((hours / totalHours) * 100).toFixed(1);
+                return `${lang} ${percentage}`;
+            });
+            setLangs(langsPer);
 
             // Initialize array for last 30 days' contribution data
             const monthlyContributionsTemp = new Array(30).fill(0);
@@ -97,6 +114,9 @@ function Dashboard() {
 
             // Reverse array so most recent dates are at the end
             setMonthlyContributions(monthlyContributionsTemp.reverse());
+
+
+
         };
         fetchLogs();
     }, [uid]);
@@ -128,12 +148,12 @@ function Dashboard() {
                         <p>Productivity</p>
                     </div>
                     <div className="stat-item">
-                        <h3>41</h3>
-                        <p>Commits</p>
+                        <h3>{langs[0]?.split(' ')[1] || '0%'}</h3>
+                        <p>{langs[0]?.split(' ')[0] || 'None'}</p>
                     </div>
                     <div className="stat-item">
-                        <h3>8</h3>
-                        <p>Projects</p>
+                        <h3>{langs.filter(lang => parseFloat(lang.split(' ')[1]) > 0).length}</h3>
+                        <p>Languages Used</p>
                     </div>
                 </div>
             </div>
@@ -171,6 +191,33 @@ function Dashboard() {
                             );
                         })
                     ))}
+                </div>
+            </div>
+
+            {/* Shows top programming languages used with percentage bars */}
+            <div className="dashboard-box">
+                <h2 className="box-title">Top Languages</h2>
+                <div className="languages-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1rem' }}>
+                    {langs
+                        .filter(lang => {
+                            const [, percentage] = lang.split(' ');
+                            return parseFloat(percentage) > 0;
+                        })
+                        .slice(0, 6)
+                        .map((lang, index) => {
+                            const [langName, percentage] = lang.split(' ');
+                            return (
+                                <div key={index} className="language-item" style={{ width: '100%' }}>
+                                    <div className="language-info" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                                        <span style={{ fontWeight: 500, color: '#fff' }}>{langName}</span>
+                                        <span style={{ color: '#888' }}>{percentage}%</span>
+                                    </div>
+                                    <div className="language-bar" style={{ width: '100%', height: '8px', backgroundColor: '#3C3C3E', borderRadius: '4px' }}>
+                                        <div className="language-progress" style={{ width: `${percentage}%`, backgroundColor: '#FF6500', height: '100%', borderRadius: '4px', transition: 'width 0.3s ease' }}></div>
+                                    </div>
+                                </div>
+                            );
+                        })}
                 </div>
             </div>
 
